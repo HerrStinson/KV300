@@ -1,0 +1,11 @@
+.env
+secrets.conf
+KV300/printer_data/gcodes/
+KV300/printer_data/logs/
+KV300/printer_data/database/
+KV300/printer_data/backup/
+KV300/printer_data/systemd/
+KV300/printer_data/comms/
+KV300/printer_data/fw
+KV300/printer_data/moonraker.asvc
+KV300/printer_data/.moonraker.uuid
