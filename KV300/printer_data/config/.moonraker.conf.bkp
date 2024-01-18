@@ -62,6 +62,14 @@ primary_branch = main
 managed_services = sonar
 install_script = tools/install.sh
 
+[update_manager klipper-macros]
+type = git_repo
+origin = https://github.com/HerrStinson/klipper-macros.git
+path = ~/printer_data/config/klipper-macros
+primary_branch = main
+is_system_service = False
+managed_services = klipper
+
 [update_manager moonraker-obico]
 type = git_repo
 path = /home/f.kehlenbach/moonraker-obico
