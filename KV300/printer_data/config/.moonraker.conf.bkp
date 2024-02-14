@@ -1,18 +1,24 @@
 [server]
 host = 0.0.0.0
 port = 7125
+klippy_uds_address = {data_path}/comms/klippy.sock
 max_upload_size = 1024
-klippy_uds_address = ~/printer_data/comms/klippy.sock
 
-[file_manager]
-enable_object_processing = True
+[machine]
+provider = systemd_dbus
+
+[data_store]
+temperature_store_size = 1200
+gcode_store_size = 1000
 
 [authorization]
+force_logins = False
 cors_domains = 
-	https://my.mainsail.xyz
-	http://my.mainsail.xyz
-	http://*.local
-	http://*.lan
+	*.local
+	*.lan
+	*://app.fluidd.xyz
+	*://dev-app.fluidd.xyz
+	*://my.mainsail.xyz
 trusted_clients = 
 	10.0.0.0/8
 	127.0.0.0/8
@@ -22,70 +28,35 @@ trusted_clients =
 	FE80::/10
 	::1/128
 
-[octoprint_compat]
-
 [history]
 
-[announcements]
-subscriptions = 
-	mainsail
+[octoprint_compat]
 
 [update_manager]
-refresh_interval = 168
 enable_auto_refresh = True
 
-[update_manager mainsail]
+[update_manager Klippain]
+type = git_repo
+path = ~/klippain_config
+origin = https://github.com/Frix-x/klippain.git
+primary_branch = main
+managed_services = moonraker klipper
+install_script = install.sh
+
+[file_manager]
+enable_object_processing = True
+
+[update_manager client mainsail]
 type = web
-channel = stable
 repo = mainsail-crew/mainsail
 path = ~/mainsail
 
-[update_manager mainsail-config]
+[update_manager klipper_tmc_autotune]
 type = git_repo
-primary_branch = master
-path = ~/mainsail-config
-origin = https://github.com/mainsail-crew/mainsail-config.git
+channel = dev
+path = ~/klipper_tmc_autotune
+origin = https://github.com/andrewmcgr/klipper_tmc_autotune.git
 managed_services = klipper
-
-[update_manager crowsnest]
-type = git_repo
-path = ~/crowsnest
-origin = https://github.com/mainsail-crew/crowsnest.git
-managed_services = crowsnest
-install_script = tools/install.sh
-
-[update_manager sonar]
-type = git_repo
-path = ~/sonar
-origin = https://github.com/mainsail-crew/sonar.git
 primary_branch = main
-managed_services = sonar
-install_script = tools/install.sh
-
-[update_manager klipper-macros]
-type = git_repo
-origin = https://github.com/HerrStinson/klipper-macros.git
-path = ~/printer_data/config/klipper-macros
-primary_branch = main
-is_system_service = False
-managed_services = klipper
-
-[update_manager KlipperScreen]
-type = git_repo
-path = ~/KlipperScreen
-origin = https://github.com/KlipperScreen/KlipperScreen.git
-virtualenv = ~/.KlipperScreen-env
-requirements = scripts/KlipperScreen-requirements.txt
-system_dependencies = scripts/system-dependencies.json
-managed_services = KlipperScreen
-
-[update_manager moonraker-obico]
-type = git_repo
-path = /home/f.kehlenbach/moonraker-obico
-origin = https://github.com/TheSpaghettiDetective/moonraker-obico.git
-env = /home/f.kehlenbach/moonraker-obico/../moonraker-obico-env/bin/python
-requirements = requirements.txt
 install_script = install.sh
-managed_services = 
-	moonraker-obico
 
